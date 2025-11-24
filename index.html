@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klaim Kode Bebas Iklan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎉 Event Klaim Kode!</h1>
+    <p>Masukkan kode voucher dan ID perangkat Anda untuk menghilangkan iklan.</p>
+
+    <form id="claimForm">
+        <div class="form-group">
+            <label for="voucherCode">Kode Voucher/Random:</label>
+            <input type="text" id="voucherCode" name="voucherCode" required placeholder="Contoh: A7FKP92J">
+        </div>
+        <div class="form-group">
+            <label for="deviceId">ID Perangkat (Device ID):</label>
+            <input type="text" id="deviceId" name="deviceId" required placeholder="ID harus sesuai di aplikasi TV">
+        </div>
+        <button type="submit">Klaim Sekarang</button>
+    </form>
+
+    <p id="message"></p>
+</div>
+
+<script>
+    document.getElementById('claimForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const messageElement = document.getElementById('message');
+        
+        // Ganti 'URL_CLOUDFLARE_WORKER_ANDA' dengan URL Worker yang akan dibuat di langkah selanjutnya
+        const workerUrl = 'URL_CLOUDFLARE_WORKER_ANDA'; 
+
+        messageElement.textContent = '⏳ Memproses klaim...';
+        messageElement.style.color = '#007bff'; // Warna biru saat loading
+
+        try {
+            const response = await fetch(workerUrl, {
+                method: 'POST',
+                // Menggunakan FormData untuk mengirim data form
+                body: new FormData(form), 
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                messageElement.style.color = 'green';
+                messageElement.textContent = result.message;
+                form.reset(); // Kosongkan form setelah sukses
+            } else {
+                messageElement.style.color = 'red';
+                messageElement.textContent = `Gagal: ${result.message}`;
+            }
+        } catch (error) {
+            console.error(error);
+            messageElement.style.color = 'red';
+            messageElement.textContent = 'Terjadi kesalahan koneksi. Pastikan ID dan Kode sudah benar dan coba lagi.';
+        }
+    });
+</script>
+
+</body>
+</html>
