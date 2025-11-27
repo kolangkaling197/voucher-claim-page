@@ -10,9 +10,10 @@
             --primary-color: #007bff; /* Biru Primer */
             --secondary-color: #28a745; /* Hijau Sukses */
             --danger-color: #dc3545; /* Merah Gagal */
-            --bg-color: #f8f9fa; /* Latar Belakang Sangat Terang */
-            --card-bg: #ffffff; /* Latar Belakang Kartu */
-            --font-color: #343a40; /* Warna Teks Gelap */
+            --info-color: #ffc107; /* Kuning/Informasi */
+            --bg-color: #f8f9fa; 
+            --card-bg: #ffffff; 
+            --font-color: #343a40; 
         }
         body {
             font-family: 'Poppins', sans-serif;
@@ -29,7 +30,7 @@
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 450px; /* Lebar Sedikit Lebih Besar */
+            max-width: 450px; 
             text-align: center;
         }
         h1 {
@@ -87,19 +88,20 @@
             border-radius: 6px;
             font-weight: 700;
             font-size: 1rem;
-            min-height: 20px; /* Memastikan ada ruang agar layout tidak bergerak */
+            min-height: 20px;
         }
-        /* Style untuk pesan status */
-        .msg-loading {
-            background-color: #e0f7ff;
-            color: var(--primary-color);
+        /* Style untuk Pesan Khusus/Catatan */
+        .notes-box {
+            background-color: #fff3cd; /* Warna kuning muda */
+            border: 1px solid var(--info-color);
+            color: #856404; /* Warna teks gelap */
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 0.95rem;
         }
-        .msg-success {
-            background-color: #d4edda;
-            color: var(--secondary-color);
-        }
-        .msg-error {
-            background-color: #f8d7da;
+        .notes-box strong {
             color: var(--danger-color);
         }
     </style>
@@ -109,15 +111,21 @@
 <div class="container">
     <h1>🎬 Bebas Iklan!</h1>
     <p class="subtitle">Event Claim Kode Khusus Pengguna Setia</p>
-
+    
+    <div class="notes-box">
+        <p>⚠️ **Perhatian Penting:**</p>
+        <p>1. **Lokasi ID:** ID Perangkat (Device ID) Anda dapat ditemukan di dalam Aplikasi, di pojok kanan atas, pada ikon informasi **(i)**.</p>
+        <p>2. **Batasan Klaim:** Setiap **ID Perangkat hanya dapat melakukan 1x klaim** selama masa aktif 30 hari. Klaim baru dapat dilakukan setelah masa aktif berakhir.</p>
+        <p>3. **Proses:** Setelah berhasil, silakan tutup dan buka kembali Aplikasi Anda untuk menghilangkan iklan.</p>
+    </div>
     <form id="claimForm">
         <div class="form-group">
-            <label for="voucherCode">Kode Voucher/Random:</label>
+            <label for="voucherCode">Kode Voucher:</label>
             <input type="text" id="voucherCode" name="voucherCode" required placeholder="Masukkan kode unik di sini">
         </div>
         <div class="form-group">
             <label for="deviceId">ID Perangkat (Device ID):</label>
-            <input type="text" id="deviceId" name="deviceId" required placeholder="Salin ID Perangkat dari aplikasi TV Anda">
+            <input type="text" id="deviceId" name="deviceId" required placeholder="Salin ID Perangkat dari aplikasi Anda">
         </div>
         <button type="submit">Redeem</button>
     </form>
